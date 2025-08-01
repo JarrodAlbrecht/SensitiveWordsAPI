@@ -17,7 +17,7 @@ namespace SensitiveWordsAPI.Repositories
             _dbConnection = dbConnection;
         }
 
-        public async Task<IEnumerable<string>> GetAllSensitiveWords()
+        public async Task<IEnumerable<string>> GetAllSensitiveWordsAsync()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace SensitiveWordsAPI.Repositories
             }
         }
 
-        public async Task<string> GetSensitiveWordById(int id)
+        public async Task<string> GetSensitiveWordByIdAsync(int id)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
@@ -50,7 +50,7 @@ namespace SensitiveWordsAPI.Repositories
             }
         }
 
-        public async Task<string> UpsertSensitiveWord(string word)
+        public async Task<string> UpsertSensitiveWordAsync(string word)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@SensitiveWord", word.ToUpper());
@@ -76,11 +76,11 @@ namespace SensitiveWordsAPI.Repositories
             }
         }
 
-        public async Task<string> DeleteSensitiveWord(string word)
+        public async Task<string> DeleteSensitiveWordAsync(string word)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@SensitiveWord", word.ToUpper());
-            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@RowsAffected", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             try
             {
