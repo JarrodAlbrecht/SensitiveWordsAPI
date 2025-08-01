@@ -326,10 +326,6 @@ BEGIN
     END TRY
     BEGIN CATCH
         SET @RowsAffected = -1;
-
-        -- Optional: Log the error or raise it again
-        -- DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
-        -- PRINT @ErrorMessage;
     END CATCH
 END
 GO
