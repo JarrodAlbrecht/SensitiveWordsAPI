@@ -1,0 +1,33 @@
+### Sanitize input message
+POST https://localhost
+/api/SensitiveWordsClient
+Content-Type: application/json
+
+{
+  "clientInput": "Select * from message with some sensitive words"
+}
+
+### Get Sensitive Word By Id
+GET https://localhost:44395/api/Internal/SensitiveWordsInternal/1
+Content-Type: application/json
+
+### Upsert Sensitive Word
+POST https://localhost:44395/api/Internal/SensitiveWordsInternal
+Content-Type: application/json
+{
+  "ManageSensitiveWords": "Add Words"
+}
+
+### Upsert Sensitive Word
+PUT https://localhost:44395/api/Internal/SensitiveWordsInternal
+Content-Type: application/json
+{
+  "ManageSensitiveWords": "Add Words"
+}
+
+### Delete Sensitive Word
+DELETE https://localhost:44395/api/Internal/SensitiveWordsInternal
+Content-Type: application/json
+{
+  "ManageSensitiveWords": "Add Words"
+}
