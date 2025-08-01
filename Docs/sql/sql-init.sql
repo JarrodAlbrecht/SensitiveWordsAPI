@@ -1,16 +1,18 @@
-CREATE DATABASE SensitiveWordsDb;
+-- Check if db exists, create if not
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'SensitiveWordsDb')
+BEGIN
+    EXEC('CREATE DATABASE SensitiveWordsDb');
+END
 GO
 
 USE SensitiveWordsDb;
 GO
 
-
 -- Create Table
-CREATE TABLE dbo.SensitiveWords (
-    SensitiveWords NVARCHAR(255) NOT NULL
+CREATE TABLE SensitiveWords (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    SensitiveWords NVARCHAR(100) NOT NULL
 );
-GO
-
 
 --Insert List of Words
 INSERT INTO dbo.SensitiveWords (SensitiveWords)
@@ -245,11 +247,89 @@ VALUES
 ('SELECT * FROM');
 GO
 
--- Create Stored Proc
+-- Create Stored Proc for getting all sensitive words
 CREATE OR ALTER PROCEDURE dbo.pr_GetAllSensitiveWords
 AS
 BEGIN
     SET NOCOUNT ON;
     SELECT SensitiveWords FROM dbo.SensitiveWords;
+END
+GO
+
+-- Create Stored Proc for getting sensitive word by Id
+CREATE OR ALTER PROCEDURE dbo.pr_GetSensitiveWordById
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT SensitiveWords 
+    FROM dbo.SensitiveWords swdb
+    WHERE swdb.Id = @Id;
+END
+GO
+
+-- Create Stored Proc for upserting sensitive word
+CREATE OR ALTER PROCEDURE dbo.pr_UpsertSensitiveWord
+    @SensitiveWord NVARCHAR(255),
+    @Id INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Check if the word exists (case-insensitive match)
+        SELECT @Id = Id
+        FROM dbo.SensitiveWords
+        WHERE LOWER(SensitiveWords) = LOWER(@SensitiveWord);
+
+        IF @Id IS NULL
+        BEGIN
+            INSERT INTO dbo.SensitiveWords (SensitiveWords)
+            VALUES (@SensitiveWord);
+
+            SET @Id = SCOPE_IDENTITY();
+        END
+        ELSE
+        BEGIN
+            UPDATE dbo.SensitiveWords
+            SET SensitiveWords = @SensitiveWord
+            WHERE Id = @Id;
+        END
+
+        RETURN 0; -- Success
+    END TRY
+    BEGIN CATCH
+        SET @Id = -1; -- Indicate error via output too (optional)
+
+        -- Optional: capture and raise error
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR (@ErrorMessage, 16, 1);
+
+        RETURN -1; -- Failure
+    END CATCH
+END
+GO
+
+-- Create Stored Proc for upserting sensitive word
+CREATE OR ALTER PROCEDURE dbo.pr_DeleteSensitiveWord
+    @SensitiveWord NVARCHAR(255),
+    @RowsAffected INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRY
+        DELETE FROM dbo.SensitiveWords
+        WHERE LOWER(SensitiveWords) = LOWER(@SensitiveWord);
+
+        SET @RowsAffected = @@ROWCOUNT;
+    END TRY
+    BEGIN CATCH
+        SET @RowsAffected = -1;
+
+        -- Optional: Log the error or raise it again
+        -- DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        -- PRINT @ErrorMessage;
+    END CATCH
 END
 GO
