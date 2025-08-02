@@ -73,14 +73,14 @@ namespace SensitiveWordsAPI.Controllers
         /// </summary>
         /// <remarks>This method is used to remove sensitive words from the system. The request body must
         /// include the word(s) to be deleted. Ensure that the provided data is valid and formatted correctly.</remarks>
-        /// <param name="manualSensitiveWords">An object containing the sensitive word(s) to be deleted. This parameter cannot be null and must include
+        /// <param name="manageSensitiveWords">An object containing the sensitive word(s) to be deleted. This parameter cannot be null and must include
         /// valid data.</param>
         /// <returns>An <see cref="IActionResult"/> indicating the result of the operation. Typically returns an HTTP 200 OK
         /// response with the operation result.</returns>
         [HttpDelete]
-        public async Task<IActionResult> DeleteSensitiveWordAsync([FromBody] ManageSensitiveWordsRequest manualSensitiveWords)
+        public async Task<IActionResult> DeleteSensitiveWordAsync([FromBody] ManageSensitiveWordsRequest manageSensitiveWords)
         {
-            var response = await _sensitiveWordsService.DeleteSensitiveWordAsync(manualSensitiveWords.ManageSensitiveWords);
+            var response = await _sensitiveWordsService.DeleteSensitiveWordAsync(manageSensitiveWords.ManageSensitiveWords);
             return Ok(response);
         }
     }
