@@ -1,16 +1,52 @@
-1. Project Title & Description:
+# SensitiveWordsAPI
 
-    Project Name: A clear and descriptive title for your API.
-    Short Description: A brief overview of what the API does and its primary purpose.
+## 📖 Description
 
-2. Features:
+`SensitiveWordsAPI` is a .NET Core Web API that filters sensitive words from user-provided input. For example, if the word **"select"** is considered sensitive, and the client sends `"select this"`, the response will be `"****** this"`.
 
-    Key Functionality: List the main features and capabilities offered by the API.
-    Technologies Used: Mention the core technologies, frameworks, and languages employed (e.g., Node.js, Python, ASP.NET Core, Express, FastAPI).
+It also includes internal endpoints for managing the list of sensitive words stored in an MS SQL Server Express database.
 
-3. Getting Started:
+---
 
-    Prerequisites: List any software or tools required to run or develop the API (e.g., Node.js, Python, .NET SDK, specific database).
-    Installation: Provide step-by-step instructions on how to set up the project locally.
-    Configuration: Explain how to configure environment variables, database connections, or other settings.
-    Running the API: Instructions on how to start the API server.
+## 🚀 Features
+
+- ✅ Sanitize input strings by masking sensitive words
+- 🛠 Admin API to manage (add/update/delete) sensitive words
+- 💾 Persists sensitive words in SQL Server Express
+- 📄 Swagger UI available for API testing
+
+---
+
+## 🧰 Tech Stack
+
+- ASP.NET Core Web API
+- SQL Server 2022 Express
+- Dapper
+- Swagger (Swashbuckle)
+
+---
+
+## 🖥️ Getting Started
+
+### ✅ Prerequisites
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- [SQL Server 2022 Express](https://go.microsoft.com/fwlink/p/?linkid=2216019)
+- SQL Management tool (SSMS, Azure Data Studio, etc.)
+- IDE (Visual Studio)
+
+### ⚙️ Installation
+
+1. **Install SQL Server Express 2022**
+2. **Run the DB initialization script:**
+   Docs\sql\sql-init.sql
+
+## 🧪 Testing
+
+### 🔧 Prerequisites
+- Ensure the project is running using **IIS Express** (default launch profile)
+- The API should be accessible at `https://localhost:{port}`
+
+### 🧬 Testing Options
+- ✅ **Swagger UI**: Navigate to `/swagger` in your browser to interact with and test the API endpoints directly.
+- 🧾 **HTTP File**: Use the included `.http` file (e.g., `SensitiveWordsAPI.http`) to test endpoints from within supported IDEs like Visual Studio Code.
