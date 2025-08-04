@@ -50,4 +50,4 @@ It also includes internal endpoints for managing the list of sensitive words sto
 
 ### 🧬 Testing Options
 - ✅ **Swagger UI**: Navigate to `/swagger` in your browser to interact with and test the API endpoints directly.
-- 🧾 **HTTP File**: Use the included `.http` file (e.g., `SensitiveWordsAPI.http`) to test endpoints from within supported IDEs like Visual Studio Code.
+- 🧾 **HTTP File**: Use the included `.http` file (e.g., `SensitiveWordsAPI.http`) to test endpoints. This only works in Visual Studio.
