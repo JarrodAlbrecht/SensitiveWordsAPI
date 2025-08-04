@@ -2,7 +2,6 @@
 POST https://localhost
 /api/SensitiveWordsClient
 Content-Type: application/json
-
 {
   "clientInput": "Select * from message with some sensitive words"
 }

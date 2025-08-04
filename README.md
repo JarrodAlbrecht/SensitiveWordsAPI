@@ -40,6 +40,7 @@ It also includes internal endpoints for managing the list of sensitive words sto
 1. **Install SQL Server Express 2022**
 2. **Run the DB initialization script:**
    Docs\sql\sql-init.sql
+3. **Make sure to change the DefaultConnectionString information to reflect your username and password for the database in the appsetting.json file and to grant execute permissions for that user account if necessary.**
 
 ## 🧪 Testing
 
